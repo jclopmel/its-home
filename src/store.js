@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import productsJSON from './products.json'
 
 Vue.use(Vuex)
 
@@ -70,20 +71,21 @@ const store = new Vuex.Store({
 	},
 	actions:{
 		getCollection(commit, collection){		// Collect data from DB by collection name
-			let _vue = this
-			axios({
-				method: 'get',
-				url: 'https://homeapp-269710.appspot.com/api/posts',
-				params: {
-					collection: collection
-				}
-			})
-			.then((res) => {
-				_vue.commit('setProductsInStorage', res.data)
-			})
-			.catch((err) => {
-				console.log(err)
-			})			
+			this.commit('setProductsInStorage', productsJSON.products)
+			// let _vue = this
+			// axios({
+			// 	method: 'get',
+			// 	url: 'http://localhost:5000/api/posts',
+			// 	params: {
+			// 		collection: collection
+			// 	}
+			// })
+			// .then((res) => {
+			// 	_vue.commit('setProductsInStorage', res.data)
+			// })
+			// .catch((err) => {
+			// 	console.log(err)
+			// })			
 
 		},
 		addToCollection({state}, payload){					// Add data to DB by ID and collection
@@ -91,24 +93,25 @@ const store = new Vuex.Store({
 				console.log("Check Internet Connection")
 
 			}else{
-				let _vue = this;
-				axios({
-					method: 'post',
-					url: 'https://homeapp-269710.appspot.com/api/posts',
-					params: {
-						action: 'add',
-						collection: payload.collection,
-						val: payload.obj
-					}
-				})
-				.then((res) => {
-					console.log(res.data)
-					payload.obj['id'] = res.data.insertedId;
-					_vue.commit('newProduct', payload.obj)
-				})
-				.catch((err) => {
-					console.log(err)
-				})
+				this.commit('newProduct', payload.obj)
+				// let _vue = this;
+				// axios({
+				// 	method: 'post',
+				// 	url: 'http://localhost:5000/api/posts',
+				// 	params: {
+				// 		action: 'add',
+				// 		collection: payload.collection,
+				// 		val: payload.obj
+				// 	}
+				// })
+				// .then((res) => {
+				// 	console.log(res.data)
+				// 	payload.obj['id'] = res.data.insertedId;
+				// 	_vue.commit('newProduct', payload.obj)
+				// })
+				// .catch((err) => {
+				// 	console.log(err)
+				// })
 			}
 		},
 		deleteFromCollection({state, commit}, payload){					// Delete data from DB by ID and collection
@@ -116,21 +119,22 @@ const store = new Vuex.Store({
 				console.log("Check Internet Connection")
 
 			}else{
-				let _vue = this;
-				axios({
-					method: 'delete',
-					url: 'https://homeapp-269710.appspot.com/api/posts',
-					params: {
-						collection: payload.collection,
-						id: payload.id
-					}
-				})
-				.then((res) => {
-					_vue.commit('deleteProduct', payload.id)
-				})
-				.catch((err) => {
-					console.log(err)
-				})
+				this.commit('deleteProduct', payload.id)
+				// let _vue = this;
+				// axios({
+				// 	method: 'delete',
+				// 	url: 'http://localhost:5000/api/posts',
+				// 	params: {
+				// 		collection: payload.collection,
+				// 		id: payload.id
+				// 	}
+				// })
+				// .then((res) => {
+				// 	_vue.commit('deleteProduct', payload.id)
+				// })
+				// .catch((err) => {
+				// 	console.log(err)
+				// })
 			}
 		},
 		modifyFromCollection({state}, payload){				// Modify DB by ID and collection
@@ -138,21 +142,21 @@ const store = new Vuex.Store({
 				localStorage.setItem( payload.obj.id, JSON.stringify(payload.obj) )
 
 			}else{
-				axios({
-					method: 'post',
-					url: 'https://homeapp-269710.appspot.com/api/posts',
-					params: {
-						action: 'modify',
-						collection: payload.collection,
-						val: payload.obj
-					}
-				})
-				.then((res) => {
-					console.log(res.data)
-				})
-				.catch((err) => {
-					console.log(err)
-				})
+				// axios({
+				// 	method: 'post',
+				// 	url: 'http://localhost:5000/api/posts',
+				// 	params: {
+				// 		action: 'modify',
+				// 		collection: payload.collection,
+				// 		val: payload.obj
+				// 	}
+				// })
+				// .then((res) => {
+				// 	console.log(res.data)
+				// })
+				// .catch((err) => {
+				// 	console.log(err)
+				// })
 			}
 			
 		},

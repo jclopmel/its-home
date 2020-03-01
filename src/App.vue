@@ -28,6 +28,7 @@ export default {
 		checkOnlineConnection(){
 			let _vue = this;
 			let onlineStatus = function(){
+				console.log("navigator.onLin", navigator.onLine)
 				_vue.$store.commit("setOnlineStatus", navigator.onLine)
 			}
 			window.addEventListener("online", onlineStatus);
@@ -35,7 +36,7 @@ export default {
 		}
 	},
 	mounted: function (){
-		this.$store.dispatch("getCollection", this.collection)
+		this.$store.dispatch("getCollection")
 		this.checkOnlineConnection();
 	},
 	watch: {

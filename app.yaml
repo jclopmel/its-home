@@ -1,7 +1,12 @@
+# Upper versions display problems on buid/deploy
 runtime: nodejs10
 
+
+# Change file extensiones & redirects to index.html
 handlers:
-  # Serve all static files with urls ending with a file extension
 - url: /(.*\..+)$ 
   static_files: dist/\1
   upload: dist/(.*\..+)$
+- url: /.*
+  static_files: dist/index.html
+  upload: dist/index.html
