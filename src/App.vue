@@ -36,7 +36,7 @@ export default {
 		}
 	},
 	mounted: function (){
-		this.$store.dispatch("getCollection")
+		// this.$store.dispatch("getCollection")
 		this.checkOnlineConnection();
 	},
 	watch: {
