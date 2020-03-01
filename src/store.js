@@ -73,7 +73,7 @@ const store = new Vuex.Store({
 			let _vue = this
 			axios({
 				method: 'get',
-				url: 'http://localhost:5000/api/posts',
+				url: 'https://homeapp-269710.appspot.com/api/posts',
 				params: {
 					collection: collection
 				}
@@ -94,7 +94,7 @@ const store = new Vuex.Store({
 				let _vue = this;
 				axios({
 					method: 'post',
-					url: 'http://localhost:5000/api/posts',
+					url: 'https://homeapp-269710.appspot.com/api/posts',
 					params: {
 						action: 'add',
 						collection: payload.collection,
@@ -119,7 +119,7 @@ const store = new Vuex.Store({
 				let _vue = this;
 				axios({
 					method: 'delete',
-					url: 'http://localhost:5000/api/posts',
+					url: 'https://homeapp-269710.appspot.com/api/posts',
 					params: {
 						collection: payload.collection,
 						id: payload.id
@@ -140,7 +140,7 @@ const store = new Vuex.Store({
 			}else{
 				axios({
 					method: 'post',
-					url: 'http://localhost:5000/api/posts',
+					url: 'https://homeapp-269710.appspot.com/api/posts',
 					params: {
 						action: 'modify',
 						collection: payload.collection,
