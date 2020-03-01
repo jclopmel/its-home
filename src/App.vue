@@ -36,14 +36,14 @@ export default {
 		}
 	},
 	mounted: function (){
-		// this.$store.dispatch("getCollection")
+		this.$store.dispatch("getCollection")
 		this.checkOnlineConnection();
 	},
 	watch: {
-	    onlineStatus: function (val) {
-	    	//Check if changes during offline timelapse
-	    	if(val) this.$store.dispatch("checkOfflineChanges", this.collection)
-	    }
+		onlineStatus: function(val){
+			//Check if changes during offline timelapses
+			if(val) this.$store.dispatch("checkOfflineChanges", this.collection)
+		}
 	}
 };
 </script>
