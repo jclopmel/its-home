@@ -170,16 +170,17 @@
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
+		<menuBottomNavigation/>
 
 
 	</v-content>
 </template>
 
 <script>
-
+import menuBottomNavigation from '@/components/Menu_bottom_navigation';
 export default {
 	components: {
-
+		menuBottomNavigation
 	},
 	data: () => ({
 		windowWidth: window.innerWidth,
@@ -187,22 +188,22 @@ export default {
 		collection: 'fridge_collection',
 		formControl: false,
 		nameRules: [
-	        val => !!val || 'Enter a product, please',
-	        val => {
-	          const pattern = /^([a-zA-Z\s]+)$/
-	          return pattern.test(val) || 'Invalid name'
-	        },
-	      ],
+			val => !!val || 'Enter a product, please',
+			val => {
+				const pattern = /^([a-zA-Z\s]+)$/
+				return pattern.test(val) || 'Invalid name'
+			},
+		],
 		quantityRules: [
-	        val => !!val || 'Enter a number, please',
-	        val => {
-	          const pattern = /^([0-9]+)$/
-	          return pattern.test(val) || 'Invalid quantity'
-	        },
-	      ],
-	      iconRules:  [
-	        val => !!val || 'Select an icon, please',
-	      ]
+			val => !!val || 'Enter a number, please',
+			val => {
+				const pattern = /^([0-9]+)$/
+				return pattern.test(val) || 'Invalid quantity'
+			},
+		],
+		iconRules:  [
+			val => !!val || 'Select an icon, please',
+		]
 	}),
 	computed:{
 		onlineStatus(){

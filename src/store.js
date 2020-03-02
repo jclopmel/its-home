@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import axios from 'axios'
+import axios from 'axios'
 import productsJSON from './products.json'
 
 Vue.use(Vuex)
@@ -88,76 +88,92 @@ const store = new Vuex.Store({
 			// })			
 
 		},
-		addToCollection({state}, payload){					// Add data to DB by ID and collection
-			if(!state.onlineStatus){
-				console.log("Check Internet Connection")
+		addToCollection({state, commit, dispatch}, payload){					// Add data to DB by ID and collection
+			
+			dispatch("onlineStatusVerify")
+			.finally(function(){
 
-			}else{
-				this.commit('newProduct', payload.obj)
-				// let _vue = this;
-				// axios({
-				// 	method: 'post',
-				// 	url: 'http://localhost:5000/api/posts',
-				// 	params: {
-				// 		action: 'add',
-				// 		collection: payload.collection,
-				// 		val: payload.obj
-				// 	}
-				// })
-				// .then((res) => {
-				// 	console.log(res.data)
-				// 	payload.obj['id'] = res.data.insertedId;
-				// 	_vue.commit('newProduct', payload.obj)
-				// })
-				// .catch((err) => {
-				// 	console.log(err)
-				// })
-			}
+				if(!state.onlineStatus){
+					console.log("Check Internet Connection")
+
+				}else{
+					commit('newProduct', payload.obj)
+					// let _vue = this;
+					// axios({
+					// 	method: 'post',
+					// 	url: 'http://localhost:5000/api/posts',
+					// 	params: {
+					// 		action: 'add',
+					// 		collection: payload.collection,
+					// 		val: payload.obj
+					// 	}
+					// })
+					// .then((res) => {
+					// 	console.log(res.data)
+					// 	payload.obj['id'] = res.data.insertedId;
+					// 	_vue.commit('newProduct', payload.obj)
+					// })
+					// .catch((err) => {
+					// 	console.log(err)
+					// })
+				}
+			})
 		},
-		deleteFromCollection({state}, payload){					// Delete data from DB by ID and collection
-			if(!state.onlineStatus){
-				console.log("Check Internet Connection")
+		deleteFromCollection({state, commit, dispatch}, payload){					// Delete data from DB by ID and collection
 
-			}else{
-				this.commit('deleteProduct', payload.id)
-				// let _vue = this;
-				// axios({
-				// 	method: 'delete',
-				// 	url: 'http://localhost:5000/api/posts',
-				// 	params: {
-				// 		collection: payload.collection,
-				// 		id: payload.id
-				// 	}
-				// })
-				// .then((res) => {
-				// 	_vue.commit('deleteProduct', payload.id)
-				// })
-				// .catch((err) => {
-				// 	console.log(err)
-				// })
-			}
+			dispatch("onlineStatusVerify")
+			.finally(function(){
+
+				if(!state.onlineStatus){
+					console.log("Check Internet Connection")
+
+				}else{
+					commit('deleteProduct', payload.id)
+					// let _vue = this;
+					// axios({
+					// 	method: 'delete',
+					// 	url: 'http://localhost:5000/api/posts',
+					// 	params: {
+					// 		collection: payload.collection,
+					// 		id: payload.id
+					// 	}
+					// })
+					// .then((res) => {
+					// 	_vue.commit('deleteProduct', payload.id)
+					// })
+					// .catch((err) => {
+					// 	console.log(err)
+					// })
+				}
+			})
 		},
-		modifyFromCollection({state}, payload){				// Modify DB by ID and collection
-			if(!state.onlineStatus){
-				localStorage.setItem( payload.obj.id, JSON.stringify(payload.obj) )
+		modifyFromCollection({state, dispatch}, payload){				// Modify DB by ID and collection
+			
+			dispatch("onlineStatusVerify")
+			.finally(function() {
 
-			}else{
-				// axios({
-				// 	method: 'post',
-				// 	url: 'http://localhost:5000/api/posts',
-				// 	params: {
-				// 		action: 'modify',
-				// 		collection: payload.collection,
-				// 		val: payload.obj
-				// 	}
-				// })
-				// .then((res) => {
-				// 	console.log(res.data)
-				// })
-				// .catch((err) => {
-				// 	console.log(err)
-				// })
-			}
+				if(!state.onlineStatus){
+					localStorage.setItem( payload.obj.id, JSON.stringify(payload.obj) )
+
+				}else{
+					axios({
+						method: 'post',
+						url: 'http://localhost:5000/api/posts',
+						params: {
+							action: 'modify',
+							collection: payload.collection,
+							val: payload.obj
+						}
+					})
+					.then((res) => {
+						console.log(res.data)
+					})
+					.catch((err) => {
+						console.log(err)
+					})
+				}
+
+			})
 			
 		},
 		checkCorrectObject(payload){					// Chech if undefined values in object
@@ -186,6 +202,18 @@ const store = new Vuex.Store({
 				
 			}
 
+		},
+		onlineStatusVerify({commit}){
+			axios({
+				method: 'get',
+				url: 'https://www.google.com'
+			})
+			.then(() => {
+				commit("setOnlineStatus", true)
+			})
+			.catch(() => {
+				commit("setOnlineStatus", false)
+			})
 		}
 	}
 });
